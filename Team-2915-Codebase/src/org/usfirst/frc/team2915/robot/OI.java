@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team2915.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2915.robot.ControlMap;
+import org.usfirst.frc.team2915.robot.subsystems.Vision;;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -11,6 +12,7 @@ import org.usfirst.frc.team2915.robot.ControlMap;
  */
 public class OI {
     Joystick joy;
+    public final Vision vision = new Vision();
     
 	public OI(){
 		joy = new Joystick(ControlMap.joystickPortA);

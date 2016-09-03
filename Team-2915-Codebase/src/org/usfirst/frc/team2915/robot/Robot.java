@@ -24,7 +24,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
     Command autonomousCommand;
-    SendableChooser autoChooser;
+    SendableChooser camChooser;
+    SendableChooser obstChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -32,10 +33,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        autoChooser = new SendableChooser();
-        autoChooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", autoChooser);
+		configSmartDashboard();
+		
+     
     }
 	
 	/**
@@ -61,18 +61,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) autoChooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
+        //autonomousCommand = (Command) autoChooser.getSelected();
+
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
@@ -98,6 +88,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateSmartDashboard();
+        oi.vision.update();
     }
     
     /**
@@ -106,4 +98,22 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
+    private void configSmartDashboard(){
+    	camChooser = new SendableChooser();
+        
+    	camChooser.addDefault("Loader", CameraView.LOADER);
+        camChooser.addDefault("Shooter", CameraView.SHOOTER);
+        camChooser.addDefault("Vision", CameraView.VISION);
+        
+        SmartDashboard.putData("Cam: ", camChooser);
+    }
+    
+    private void updateSmartDashboard(){
+    	if (oi.vision.camToUse != (CameraView) camChooser.getSelected()){
+    		oi.vision.setCam((CameraView) camChooser.getSelected());
+    	}
+    }
+    
+    
 }

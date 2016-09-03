@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.vision.AxisCamera;
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.*;
 
-import org.usfirst.frc.team2915.robot.RobotMap;
+
 import org.usfirst.frc.team2915.robot.subsystems.CamSettings;
 
 /**
@@ -20,7 +20,7 @@ public class Vision extends Thread implements Runnable{
 	
 	private final Image loadingImage = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
 	
-	private CameraView camToUse;
+	public CameraView camToUse; //DO NOT CHANGE THIS FROM ANOTHER CLASS!!! Use setCam()!!!
 	
 	public Vision(){
 		//initialize USB cams
@@ -37,6 +37,7 @@ public class Vision extends Thread implements Runnable{
 		USBCamera cam = null;
 		try{
 			cam = new USBCamera(camName);
+			System.out.println("Succsesfully initalized USBCamera " + camName);
 		}catch (Exception e){
 			System.out.println("Failed to initalize USBCamera " + camName + ". Recived error: " + e);
 		}
@@ -48,13 +49,14 @@ public class Vision extends Thread implements Runnable{
 		AxisCamera cam = null;
 		try{
 			cam = new AxisCamera(camName);
+			System.out.println("Succsesfully initalized AxisCamera " + camName);
 		}catch(Exception e){
 			System.out.println("Failed to initalize AxisCamera " + camName + ". Recived error: " + e);
 		}
 		return cam;
 	}
 	
-	public void Run(){
+	public void update(){
 		//update cameras
 		updateCams();
 	}
@@ -90,10 +92,15 @@ public class Vision extends Thread implements Runnable{
 				loaderCam.stopCapture();
 				shooterCam.startCapture();
 				break;
+			case VISION:
+				break;
+			default:
+				break;
 			}
 		}catch(Exception e){
 			System.out.println("setCam failed: " + e);
 		}
+		camToUse = camToShow;
 	}
 }
 
