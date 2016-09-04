@@ -1,8 +1,10 @@
 package org.usfirst.frc.team2915.robot.subsystems;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.vision.USBCamera;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
+
 
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.*;
@@ -56,7 +58,7 @@ public class Vision extends Thread implements Runnable{
 		return cam;
 	}
 	
-	public void update(){
+	public void run(){
 		//update cameras
 		updateCams();
 	}
@@ -72,6 +74,11 @@ public class Vision extends Thread implements Runnable{
 				break;
 			case SHOOTER:
 				shooterCam.getImage(imageToSend);
+				break;
+			case VISION:
+				visionCam.getImage(imageToSend);
+				break;
+			default:
 				break;
 			}
 		}catch(Exception e){
@@ -93,6 +100,8 @@ public class Vision extends Thread implements Runnable{
 				shooterCam.startCapture();
 				break;
 			case VISION:
+				loaderCam.stopCapture();
+				shooterCam.stopCapture();
 				break;
 			default:
 				break;
@@ -101,6 +110,24 @@ public class Vision extends Thread implements Runnable{
 			System.out.println("setCam failed: " + e);
 		}
 		camToUse = camToShow;
+	}
+	
+	public void getTargetData(){
+		try{
+			Image targetImage = null;
+			
+			visionCam.getImage(targetImage);
+			
+			Image bianaryImage = null;
+			
+			NIVision.imaqColorThreshold(bianaryImage, targetImage, 0x00FFFFFF, NIVision.ColorMode.HSV, CamSettings.hue, CamSettings.saturation, CamSettings.value);
+			NIVision.imaqMorphology(bianaryImage, bianaryImage, NIVision.MorphologyMethod.PCLOSE, null);//we should expieriment with the morphiology methood
+			
+			
+			
+		}catch(Exception e){
+			
+		}
 	}
 }
 

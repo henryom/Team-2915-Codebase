@@ -1,18 +1,16 @@
-
 package org.usfirst.frc.team2915.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team2915.robot.Robot;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class TurnToGoal extends Command {
 
-    public ExampleCommand() {
+    public TurnToGoal() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        requires(Robot.chasis);
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +19,7 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
