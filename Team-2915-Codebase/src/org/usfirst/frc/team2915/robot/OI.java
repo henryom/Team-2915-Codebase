@@ -11,7 +11,7 @@ import org.usfirst.frc.team2915.robot.subsystems.Vision;;
  */
 public class OI {
     Joystick joy;
-    public final Vision vision = new Vision();
+    //public final Vision vision = new Vision();
     
 	public OI(){
 		joy = new Joystick(ControlMap.joystickPortA);

@@ -4,6 +4,6 @@ public class ControlMap {
 	public static int  joystickPortA = 0;
 	
 	//Joystick Ports
-	public static int axisSpeed = 0;
-	public static int axisTurn = 0;
+	public static int axisSpeed = 1;
+	public static int axisTurn = 2;
 }

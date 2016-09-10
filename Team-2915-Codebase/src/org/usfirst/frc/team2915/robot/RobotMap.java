@@ -7,10 +7,10 @@ package org.usfirst.frc.team2915.robot;
  */
 public class RobotMap {
 	//motor ports
-	public static int motorPortLeftA = 0;
-	public static int motorPortLeftB = 0;
+	public static int motorPortLeftA = 2;
+	public static int motorPortLeftB = 3;
 	public static int motorPortRightA = 0;
-	public static int motorPortRightB = 0;
+	public static int motorPortRightB = 1;
 	
 
 

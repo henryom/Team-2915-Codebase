@@ -2,6 +2,7 @@ package org.usfirst.frc.team2915.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team2915.robot.ControlMap;
 import org.usfirst.frc.team2915.robot.Robot;
 
 /**
@@ -15,11 +16,17 @@ public class DriveWithJoystick extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chasis.driveWithJoystick(Robot.oi.getJoystick());
+    	try{
+    		Robot.chasis.setMotors(Robot.oi.getJoystick().getRawAxis(ControlMap.axisSpeed), Robot.oi.getJoystick().getRawAxis(ControlMap.axisTurn));
+    	}catch (Exception e){
+    		System.out.println(e);
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

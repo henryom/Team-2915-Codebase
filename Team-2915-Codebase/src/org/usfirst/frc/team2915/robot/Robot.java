@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	
 	public static final Chasis chasis = new Chasis();
 	public static OI oi;
 
@@ -32,7 +32,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		configSmartDashboard();
+
+		//configSmartDashboard();
 		
      
     }
@@ -64,7 +65,7 @@ public class Robot extends IterativeRobot {
 
     	
     	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+//        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
@@ -87,8 +88,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        updateSmartDashboard();
-        oi.vision.run();
+        //updateSmartDashboard();
+        //oi.vision.run();
     }
     
     /**
@@ -109,9 +110,9 @@ public class Robot extends IterativeRobot {
     }
     
     private void updateSmartDashboard(){
-    	if (oi.vision.camToUse != (CameraView) camChooser.getSelected()){
-    		oi.vision.setCam((CameraView) camChooser.getSelected());
-    	}
+//    	if (oi.vision.camToUse != (CameraView) camChooser.getSelected()){
+//    		oi.vision.setCam((CameraView) camChooser.getSelected());
+//    	}
     }
     
     

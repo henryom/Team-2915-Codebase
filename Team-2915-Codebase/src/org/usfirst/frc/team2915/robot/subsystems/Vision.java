@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.vision.USBCamera;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
 
 
+
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.*;
 
@@ -122,9 +123,9 @@ public class Vision extends Thread implements Runnable{
 			
 			NIVision.imaqColorThreshold(bianaryImage, targetImage, 0x00FFFFFF, NIVision.ColorMode.HSV, CamSettings.hue, CamSettings.saturation, CamSettings.value);
 			NIVision.imaqMorphology(bianaryImage, bianaryImage, NIVision.MorphologyMethod.PCLOSE, null);//we should expieriment with the morphiology methood
-			
-			
-			
+			//continue analyzing the image and pass to TurnToGoal
+			int particles = NIVision.imaqCountParticles(bianaryImage, NORM_PRIORITY);
+			//needs more work with an actual robot
 		}catch(Exception e){
 			
 		}
