@@ -11,7 +11,8 @@ public class RobotMap {
 	public static int motorPortLeftB = 3;
 	public static int motorPortRightA = 0;
 	public static int motorPortRightB = 1;
-	
+	//trigger
+	public static int triggerPort = 0;
 
 
 	

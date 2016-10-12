@@ -1,9 +1,11 @@
 package org.usfirst.frc.team2915.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import org.usfirst.frc.team2915.robot.ControlMap;
-import org.usfirst.frc.team2915.robot.subsystems.Vision;;
+import org.usfirst.frc.team2915.robot.subsystems.Vision;
+import org.usfirst.frc.team2915.robot.commands.TriggerWithButtons;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -11,10 +13,13 @@ import org.usfirst.frc.team2915.robot.subsystems.Vision;;
  */
 public class OI {
     Joystick joy;
-    //public final Vision vision = new Vision();
+    public final Vision vision = new Vision();
     
 	public OI(){
 		joy = new Joystick(ControlMap.joystickPortA);
+		
+		
+		
 	}
 	
 	public Joystick getJoystick(){
@@ -22,4 +27,3 @@ public class OI {
 	}
 	
 }
-

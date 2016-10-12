@@ -8,8 +8,8 @@ public class CamSettings {
 	public final static CameraView defaultCam = CameraView.SHOOTER;
 	
 	//camera names
-	public static String cameraNameShooter = "shooter";
-	public static String cameraNameLoader = "loader";
+	public static String cameraNameShooter = "cam0";
+	public static String cameraNameLoader = "cam1";
 	public static String cameraNameVision = "visionCam.local";
 	
 	//image processing values

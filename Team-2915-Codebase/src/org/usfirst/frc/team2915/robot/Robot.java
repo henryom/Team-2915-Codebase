@@ -20,6 +20,8 @@ public class Robot extends IterativeRobot {
 
 	
 	public static final Chasis chasis = new Chasis();
+	public static final Trigger trigger = new Trigger();
+	public static final TestCylinder testCylinder = new TestCylinder();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -49,6 +51,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		oi.vision.run();
 	}
 
 	/**
@@ -61,6 +64,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	
         //autonomousCommand = (Command) autoChooser.getSelected();
 
     	
@@ -72,6 +76,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	oi.vision.run();
         Scheduler.getInstance().run();
     }
 
@@ -89,7 +94,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         //updateSmartDashboard();
-        //oi.vision.run();
+        oi.vision.run();
     }
     
     /**

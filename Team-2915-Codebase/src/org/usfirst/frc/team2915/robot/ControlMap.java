@@ -6,4 +6,9 @@ public class ControlMap {
 	//Joystick Ports
 	public static int axisSpeed = 1;
 	public static int axisTurn = 2;
+	
+	public static int triggerUp = 3;
+	public static int triggerDown = 4;
+	
+	public static int wheelToggle = 5;
 }
