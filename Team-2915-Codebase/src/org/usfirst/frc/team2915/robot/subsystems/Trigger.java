@@ -16,8 +16,8 @@ public class Trigger extends Subsystem {
     // here. Call these from Commands.
 	//public Jaguar jaguarTrigger = new Jaguar(RobotMap.triggerPort);
 	
-	public CANTalon talLeftTrig = new CANTalon(0);
-	public CANTalon talRightTrig = new CANTalon(1);
+	public CANTalon talLeftTrig = new CANTalon(1);
+	public CANTalon talRightTrig = new CANTalon(2);
 	
 	public Victor vexMotor = new Victor(8);
 	
