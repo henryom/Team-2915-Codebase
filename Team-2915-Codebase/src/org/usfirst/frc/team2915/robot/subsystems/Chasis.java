@@ -28,8 +28,8 @@ public class Chasis extends Subsystem {
 		
 	}
 	public Chasis(){
-		talonLeftA.setInverted(true);
-		talonLeftB.setInverted(true);
+		talonRightA.setInverted(true);
+		talonRightB.setInverted(true);
 	}
 	
     public void initDefaultCommand() {
@@ -40,11 +40,20 @@ public class Chasis extends Subsystem {
     
     public void setMotors(double speed, double turn){
     	
-    	talonRightA.set(speed + turn);
-    	talonRightB.set(speed + turn);
-    	talonLeftA.set(speed - turn);
-    	talonLeftB.set(speed - turn);
+    	talonRightA.set(speed - turn);
+    	talonRightB.set(speed - turn);
+    	talonLeftA.set(speed + turn);
+    	talonLeftB.set(speed + turn);
     }
+    
+    public void setMotorsIndv(double leftSpeed, double rightSpeed){
+    	
+    	talonRightA.set(rightSpeed);
+    	talonRightB.set(rightSpeed);
+    	talonLeftA.set(leftSpeed);
+    	talonLeftB.set(leftSpeed);
+    }
+    
     
     public void stop(){
     	talonRightA.set(0);

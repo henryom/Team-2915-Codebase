@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team2915.robot.commands.SquareDance;
 import org.usfirst.frc.team2915.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,11 +67,8 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	
-        //autonomousCommand = (Command) autoChooser.getSelected();
-
-    	
-    	// schedule the autonomous command (example)
-//        if (autonomousCommand != null) autonomousCommand.start();
+    	autonomousCommand = new SquareDance();
+    	if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
