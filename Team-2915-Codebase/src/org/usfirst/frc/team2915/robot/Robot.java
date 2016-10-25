@@ -19,12 +19,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	
 	public static final Chasis chasis = new Chasis();
 	public static final Trigger trigger = new Trigger();
 	public static final TestCylinder testCylinder = new TestCylinder();
 	public static OI oi;
+	
+    //double gForceX = chasis.bAccelerometer.getX();
+    //double gForceY = chasis.bAccelerometer.getY();
+    //double gForceZ = chasis.bAccelerometer.getZ();
+    
+    public double gForceSustainedX = 0.0;
+    public double gForceSustainedY = 0.0;
+    public double gForceSustainedZPositive = 1.05;
+    public double gForceSustainedZNegative = 0.95;
+    
+    public double xForceCap = 1.4;
+    public double yForceCap = 1.4;
 
     Command autonomousCommand;
     SendableChooser camChooser;
@@ -77,6 +88,18 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	oi.vision.run();
         Scheduler.getInstance().run();
+	    
+	if (Math.abs(chasis.bAccelerometer.getX()) >= Math.abs(xForceCap)){
+    	//Stop movement until driver input
+    	autonomousCommand.cancel();
+    		
+    	}
+    	if (Math.abs(chasis.bAccelerometer.getY()) >= Math.abs(yForceCap)){
+    		//Stop movement until driver input
+    		autonomousCommand.cancel();
+    		
+    	}
+	    
     }
 
     public void teleopInit() {
@@ -117,6 +140,36 @@ public class Robot extends IterativeRobot {
 //    	if (oi.vision.camToUse != (CameraView) camChooser.getSelected()){
 //    		oi.vision.setCam((CameraView) camChooser.getSelected());
 //    	}
+	    
+	testCollisionForce();
+    	
+    	SmartDashboard.putNumber("Accel X", chasis.bAccelerometer.getX());
+    	SmartDashboard.putNumber("Accel Y", chasis.bAccelerometer.getY());
+    	SmartDashboard.putNumber("Accel Z", chasis.bAccelerometer.getZ());
+    	
+    	SmartDashboard.putNumber("Sustained X", gForceSustainedX);
+    	SmartDashboard.putNumber("Sustained Y", gForceSustainedY);
+    	SmartDashboard.putNumber("Sustained Z (Down)", gForceSustainedZNegative);
+    	SmartDashboard.putNumber("Sustained Z (Up)", gForceSustainedZPositive);
+	    
+    }
+	
+    public void testCollisionForce(){
+    	
+    	if (Math.abs(chasis.bAccelerometer.getX()) >= Math.abs(gForceSustainedY)){
+    		gForceSustainedX = chasis.bAccelerometer.getX();
+    	}
+    	if (Math.abs(chasis.bAccelerometer.getY()) >= Math.abs(gForceSustainedY)){
+    		gForceSustainedY = chasis.bAccelerometer.getY();
+    	}
+    	if (chasis.bAccelerometer.getZ() >= gForceSustainedZPositive){
+    		gForceSustainedZPositive = chasis.bAccelerometer.getZ();
+    	}
+    	if (chasis.bAccelerometer.getZ() <= gForceSustainedZNegative){
+    		gForceSustainedZNegative = chasis.bAccelerometer.getZ();
+    	}
+    	
+    	
     }
     
     
