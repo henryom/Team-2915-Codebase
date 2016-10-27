@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+
+import org.usfirst.frc.team2915.robot.commands.Drive;
 import org.usfirst.frc.team2915.robot.commands.SquareDance;
 import org.usfirst.frc.team2915.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -34,8 +37,10 @@ public class Robot extends IterativeRobot {
     public double gForceSustainedZPositive = 1.05;
     public double gForceSustainedZNegative = 0.95;
     
-    public double xForceCap = 1.4;
-    public double yForceCap = 1.4;
+    public double xForceCap = 0.54;
+    public double yForceCap = 0.54;
+    //public double xForceCap = 1.4;
+    //public double yForceCap = 1.4;
 
     Command autonomousCommand;
     SendableChooser camChooser;
@@ -45,19 +50,20 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	
     public void robotInit() {
-		oi = new OI();
-
-		//configSmartDashboard();
+	    
+	oi = new OI();
+	//configSmartDashboard();
 		
-     
     }
 	
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
+     * the robot is disabled.
      */
+	
     public void disabledInit(){
 
     }
@@ -76,52 +82,67 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
+	
     public void autonomousInit() {
     	
-    	autonomousCommand = new SquareDance();
+    	autonomousCommand = new Drive(5, 0.56, 0.56);
     	if (autonomousCommand != null) autonomousCommand.start();
+    	System.out.println("##########################");
+    	System.out.println("### AUTONOMOUS STARTED ###");
+    	System.out.println("##########################");
     }
 
     /**
      * This function is called periodically during autonomous
      */
+	
     public void autonomousPeriodic() {
     	oi.vision.run();
         Scheduler.getInstance().run();
-	    
-	if (Math.abs(chasis.bAccelerometer.getX()) >= Math.abs(xForceCap)){
-    	//Stop movement until driver input
-    	autonomousCommand.cancel();
-    		
-    	}
-    	if (Math.abs(chasis.bAccelerometer.getY()) >= Math.abs(yForceCap)){
-    		//Stop movement until driver input
-    		autonomousCommand.cancel();
-    		
-    	}
+        
+        if (autonomousCommand.isRunning()) {
+        	
+		    if (chasis.bAccelerometer.getX() >= Math.abs(xForceCap)) {		  
+		    	
+	        	System.out.println("COMMAND STOPPED: " + chasis.bAccelerometer.getX() + "Gs detected on X AXIS");
+		       	
+		       	//Stop movement until driver input
+		      	autonomousCommand.cancel();
+		      	
+		    	System.out.println("##########################");
+		    	System.out.println("### AUTONOMOUS STOPPED ###");
+		    	System.out.println("##########################");
+		    		
+		    }
+		        
+        }
 	    
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
+	    
+	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+	    
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
     /**
      * This function is called periodically during operator control
      */
+	
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        //updateSmartDashboard();
+        updateSmartDashboard();
         oi.vision.run();
     }
     
     /**
      * This function is called periodically during test mode
      */
+	
     public void testPeriodic() {
         LiveWindow.run();
     }
@@ -136,12 +157,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Cam: ", camChooser);
     }
     
-    private void updateSmartDashboard(){
+    private void updateSmartDashboard() {
+	    
 //    	if (oi.vision.camToUse != (CameraView) camChooser.getSelected()){
 //    		oi.vision.setCam((CameraView) camChooser.getSelected());
 //    	}
 	    
-	testCollisionForce();
+    	testCollisionForce();
     	
     	SmartDashboard.putNumber("Accel X", chasis.bAccelerometer.getX());
     	SmartDashboard.putNumber("Accel Y", chasis.bAccelerometer.getY());
